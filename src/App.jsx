@@ -1,6 +1,7 @@
 import React from 'react';
 import { HeadProvider } from 'react-head';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import './index.css';
 import Base from './components/Base';
 import Homepage from './pages/Homepage';
 
