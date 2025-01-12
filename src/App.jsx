@@ -2,6 +2,7 @@ import React, { Suspense } from 'react';
 import { HeadProvider } from 'react-head';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './index.css';
+import ScrollToTop from './components/ScrollToTop';
 
 // Lazy-loaded components
 const Base = React.lazy(() => import('./components/Base'));
@@ -13,6 +14,7 @@ function App() {
   return (
     <HeadProvider>
       <BrowserRouter>
+        <ScrollToTop /> // scrolls every page to top
         <Suspense fallback={<div>Loading...</div>}>
           <Routes>
             <Route path="/" element={<Base />}>
