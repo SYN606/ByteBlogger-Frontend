@@ -14,7 +14,7 @@ function App() {
   return (
     <HeadProvider>
       <BrowserRouter>
-        <ScrollToTop /> // scrolls every page to top
+        <ScrollToTop /> 
         <Suspense fallback={<div>Loading...</div>}>
           <Routes>
             <Route path="/" element={<Base />}>
