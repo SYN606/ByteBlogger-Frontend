@@ -38,7 +38,7 @@ export default function Navbar() {
                     {/* Logo and desktop nav */}
                     <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                         <div className="flex shrink-0 items-center">
-                            <div className="h-8 w-auto bg-gray-500 rounded-md flex items-center justify-center text-white font-bold text-sm">
+                            <div className="h-8 w-auto rounded-md flex items-center justify-center text-white font-bold text-sm">
                                 ByteBloggers
                             </div>
                         </div>
