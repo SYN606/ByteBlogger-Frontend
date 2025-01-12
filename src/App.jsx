@@ -1,29 +1,29 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { HeadProvider } from 'react-head';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './index.css';
-import Base from './components/Base';
-import Homepage from './pages/Homepage';
-import Error_page from './pages/Error_page';
-import SignIn from './pages/SignIn';
+
+// Lazy-loaded components
+const Base = React.lazy(() => import('./components/Base'));
+const Homepage = React.lazy(() => import('./pages/Homepage'));
+const ErrorPage = React.lazy(() => import('./pages/Error_page'));
+const SignIn = React.lazy(() => import('./pages/SignIn'));
 
 function App() {
   return (
-    <>
-      <HeadProvider>
-        <BrowserRouter>
+    <HeadProvider>
+      <BrowserRouter>
+        <Suspense fallback={<div>Loading...</div>}>
           <Routes>
             <Route path="/" element={<Base />}>
-              <Route path="/" element={<Homepage />} />
-              <Route path='sign_in/' element={<SignIn />} />
-
-              {/* Error page */}
-              <Route path='*' element={<Error_page />} />
+              <Route index element={<Homepage />} />
+              <Route path="sign_in" element={<SignIn />} />
+              <Route path="*" element={<ErrorPage />} />
             </Route>
           </Routes>
-        </BrowserRouter>
-      </HeadProvider>
-    </>
+        </Suspense>
+      </BrowserRouter>
+    </HeadProvider>
   );
 }
 
