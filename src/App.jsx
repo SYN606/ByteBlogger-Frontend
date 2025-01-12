@@ -3,24 +3,20 @@ import { HeadProvider } from 'react-head';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './index.css';
 import ScrollToTop from './components/ScrollToTop';
-
-// Lazy-loaded components
-const Base = React.lazy(() => import('./components/Base'));
-const Homepage = React.lazy(() => import('./pages/Homepage'));
-const ErrorPage = React.lazy(() => import('./pages/Error_page'));
-const SignIn = React.lazy(() => import('./pages/SignIn'));
+import { Base } from './components';
+import { Homepage, NotFoundPage, SignIn } from './pages';
 
 function App() {
   return (
     <HeadProvider>
       <BrowserRouter>
-        <ScrollToTop /> 
+        <ScrollToTop />
         <Suspense fallback={<div>Loading...</div>}>
           <Routes>
             <Route path="/" element={<Base />}>
               <Route index element={<Homepage />} />
               <Route path="sign_in" element={<SignIn />} />
-              <Route path="*" element={<ErrorPage />} />
+              <Route path="*" element={<NotFoundPage />} />
             </Route>
           </Routes>
         </Suspense>

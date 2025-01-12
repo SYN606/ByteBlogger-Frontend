@@ -1,19 +1,17 @@
-'use client'
-
 import React from 'react'
-import { FaArrowRight } from 'react-icons/fa'
+import { Link } from 'react-router-dom'
 
 const navigation = [
-    { name: 'Home', href: '#' },
-    { name: 'Tech News', href: '#' },
-    { name: 'Tutorials', href: '#' },
-    { name: 'About', href: '#' },
+    { name: 'Home', href: '/' },
+    { name: 'Tech News', href: '/tech-news' },
+    { name: 'Tutorials', href: '/tutorials' },
+    { name: 'About', href: '/about' },
 ]
 
 const featuredArticles = [
     {
         title: 'Top Cybersecurity Trends to Watch in 2025',
-        href: '#',
+        href: '/cybersecurity-trends',
         description:
             'Stay ahead of emerging cyber threats and explore the latest innovations in cybersecurity.',
         image:
@@ -21,7 +19,7 @@ const featuredArticles = [
     },
     {
         title: 'How to Build a Secure Home Network',
-        href: '#',
+        href: '/secure-home-network',
         description:
             'Learn the essential steps to secure your home network and protect your devices from attacks.',
         image:
@@ -42,18 +40,18 @@ export default function TechHeroSection() {
                         cybersecurity tips, and master the world of computers with our in-depth tutorials.
                     </p>
                     <div className="mt-8 flex items-center justify-center gap-x-6">
-                        <a
-                            href="#"
+                        <Link
+                            to="/articles"
                             className="rounded-md bg-cyan-500 px-5 py-3 text-sm font-semibold text-gray-900 shadow-sm hover:bg-cyan-400"
                         >
                             Explore Articles
-                        </a>
-                        <a
-                            href="#"
+                        </Link>
+                        <Link
+                            to="/learn-more"
                             className="text-sm font-semibold text-gray-300 hover:text-cyan-400"
                         >
                             Learn More <span aria-hidden="true">→</span>
-                        </a>
+                        </Link>
                     </div>
                 </div>
 
@@ -62,9 +60,9 @@ export default function TechHeroSection() {
                     <h2 className="text-center text-3xl font-bold text-white">Featured Articles</h2>
                     <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-2 px-4 lg:px-8">
                         {featuredArticles.map((article) => (
-                            <a
+                            <Link
                                 key={article.title}
-                                href={article.href}
+                                to={article.href}
                                 className="group block rounded-lg border border-gray-700 bg-gray-800 p-4 shadow-sm hover:shadow-lg"
                             >
                                 <img
@@ -78,7 +76,7 @@ export default function TechHeroSection() {
                                     </h3>
                                     <p className="mt-2 text-sm text-gray-400">{article.description}</p>
                                 </div>
-                            </a>
+                            </Link>
                         ))}
                     </div>
                 </section>
