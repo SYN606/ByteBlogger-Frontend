@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { FaBars, FaTimes } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 const navigation = [
-    { name: 'Home', href: '/', current: true },
-    { name: 'Blogs', href: '/blogs', current: false },
-    { name: 'About us', href: '/about', current: false },
-    { name: 'Something more', href: '/something-more', current: false },
+    { name: 'Home', href: '/' },
+    { name: 'Blogs', href: '/blogs' },
+    { name: 'About us', href: '/about' },
+    { name: 'Something more', href: '/something-more' },
 ];
 
 function classNames(...classes) {
@@ -45,16 +45,19 @@ export default function Navbar() {
                         <div className="hidden sm:ml-6 sm:block">
                             <div className="flex space-x-4">
                                 {navigation.map((item) => (
-                                    <Link
+                                    <NavLink
                                         key={item.name}
                                         to={item.href}
-                                        className={classNames(
-                                            item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                                            'rounded-md px-3 py-2 text-sm font-medium'
-                                        )}
+                                        className={({ isActive }) =>
+                                            classNames(
+                                                isActive ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                                                'rounded-md px-3 py-2 text-sm font-medium'
+                                            )
+                                        }
+                                        activeclassname="bg-gray-900 text-white" // Optional: Tailwind applies it automatically
                                     >
                                         {item.name}
-                                    </Link>
+                                    </NavLink>
                                 ))}
                             </div>
                         </div>
@@ -62,12 +65,12 @@ export default function Navbar() {
 
                     {/* Login button in place of profile and notification */}
                     <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                        <Link
+                        <NavLink
                             to="/sign_in"
                             className="inline-flex items-center justify-center rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
                         >
                             Log In
-                        </Link>
+                        </NavLink>
                     </div>
                 </div>
             </div>
@@ -77,16 +80,18 @@ export default function Navbar() {
                 <div className="sm:hidden">
                     <div className="space-y-1 px-2 pb-3 pt-2">
                         {navigation.map((item) => (
-                            <Link
+                            <NavLink
                                 key={item.name}
                                 to={item.href}
-                                className={classNames(
-                                    item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                                    'block rounded-md px-3 py-2 text-base font-medium'
-                                )}
+                                className={({ isActive }) =>
+                                    classNames(
+                                        isActive ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                                        'block rounded-md px-3 py-2 text-base font-medium'
+                                    )
+                                }
                             >
                                 {item.name}
-                            </Link>
+                            </NavLink>
                         ))}
                     </div>
                 </div>

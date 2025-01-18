@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './index.css';
 import ScrollToTop from './components/ScrollToTop';
 import { Base } from './components';
-import { Homepage, NotFoundPage, SignIn } from './pages';
+import { Blogs, Homepage, NotFoundPage, SignIn } from './pages';
 
 function App() {
   return (
@@ -16,6 +16,7 @@ function App() {
             <Route path="/" element={<Base />}>
               <Route index element={<Homepage />} />
               <Route path="sign_in" element={<SignIn />} />
+              <Route path="blogs" element={<Blogs />} />
               <Route path="*" element={<NotFoundPage />} />
             </Route>
           </Routes>

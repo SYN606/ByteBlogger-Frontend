@@ -1,7 +1,22 @@
+// Base file 
 import Base from './Base'
-import Footer from './Footer'
-import Navbar from './Navbar'
-import InputField from './InputField'
-import PasswordField from './PasswordField'
 
-export { Base, Footer, Navbar, InputField, PasswordField }
+// header and footer
+import Footer from './utilities/Footer'
+import Navbar from './utilities/Navbar'
+
+// input fields
+import InputField from './utilities/InputField'
+import PasswordField from './utilities/PasswordField'
+
+// profile components 
+import NotificationMenu from './profile/Notification'
+import ProfileMenu from './profile/Profile'
+// homepage components 
+
+import HeroSection from './homepage/HeroSection'
+import FeaturedArticle from './homepage/FeaturedArticle'
+
+
+
+export { Base, Footer, Navbar, InputField, PasswordField, NotificationMenu, ProfileMenu, HeroSection, FeaturedArticle }

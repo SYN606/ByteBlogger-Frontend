@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Title } from "react-head";
-import { FaEnvelope, FaLock, FaArrowRight } from "react-icons/fa";
 import { InputField, PasswordField } from "../components";
 
 export default function SignIn() {
