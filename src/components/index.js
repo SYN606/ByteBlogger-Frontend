@@ -17,6 +17,6 @@ import ProfileMenu from './profile/Profile'
 import HeroSection from './homepage/HeroSection'
 import FeaturedArticle from './homepage/FeaturedArticle'
 
+import ScrollToTop from './utilities/ScrollToTop'
 
-
-export { Base, Footer, Navbar, InputField, PasswordField, NotificationMenu, ProfileMenu, HeroSection, FeaturedArticle }
+export { Base, Footer, Navbar, InputField, PasswordField, NotificationMenu, ProfileMenu, HeroSection, FeaturedArticle, ScrollToTop }
