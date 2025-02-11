@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { LuEye, LuEyeOff } from "react-icons/lu";
 
-const PasswordField = ({ label = "Password", value, onChange, required = false }) => {
+export default function PasswordField({ label = "Password", value, onChange, required = false }) {
     const [isClose, setIsClose] = useState(true);
     const uniqueId = `${label.toLowerCase().replace(/\s+/g, "-")}-${Math.random().toString(36).substr(2, 9)}`;
 
@@ -30,4 +30,4 @@ const PasswordField = ({ label = "Password", value, onChange, required = false }
     );
 };
 
-export default PasswordField;
+

@@ -4,24 +4,33 @@ import { NavLink } from 'react-router-dom';
 
 const ProfileMenu = () => {
     const [profileMenuOpen, setProfileMenuOpen] = useState(false);
-    const menuRef = useRef(null); // Reference to the profile menu
-    const buttonRef = useRef(null); // Reference to the button that opens the menu
+    const menuRef = useRef(null);
+    const buttonRef = useRef(null);
 
-    // Function to close the profile menu if clicked outside
+    // Retrieve `IsAdmin` value from localStorage
+    const isAdmin = JSON.parse(localStorage.getItem("IsAdmin")) || false; // Ensures boolean value
+
     const handleClickOutside = (e) => {
-        // Check if the click was outside both the menu and the button
-        if (menuRef.current && !menuRef.current.contains(e.target) && !buttonRef.current.contains(e.target)) {
+        if (
+            menuRef.current &&
+            !menuRef.current.contains(e.target) &&
+            !buttonRef.current.contains(e.target)
+        ) {
             setProfileMenuOpen(false);
         }
     };
 
-    // Set up event listener for clicks outside
     useEffect(() => {
         document.addEventListener('click', handleClickOutside);
         return () => {
             document.removeEventListener('click', handleClickOutside);
         };
     }, []);
+
+    const handleLogout = () => {
+        console.log("User logged out");
+        localStorage.removeItem("IsAdmin");
+    };
 
     return (
         <div className="relative ml-3">
@@ -41,24 +50,47 @@ const ProfileMenu = () => {
                 >
                     <NavLink
                         to="/profile"
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                        activeClassName="bg-gray-100"
+                        className={({ isActive }) =>
+                            `block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 ${isActive ? "bg-gray-100" : ""
+                            }`
+                        }
                     >
                         Your Profile
                     </NavLink>
+
                     <NavLink
-                        to="/settings"
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                        activeClassName="bg-gray-100"
+                        to="/change_your_password"
+                        className={({ isActive }) =>
+                            `block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 ${isActive ? "bg-gray-100" : ""
+                            }`
+                        }
                     >
-                        Settings
+                        Change Password
                     </NavLink>
-                    <a
-                        href="#"
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+
+
+
+                    <button
+                        onClick={handleLogout}
+                        className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     >
                         Sign out
-                    </a>
+                    </button>
+
+                    {isAdmin && (
+                        <>
+                            <hr />
+                            <NavLink
+                                to="/admin"
+                                className={({ isActive }) =>
+                                    `block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 ${isActive ? "bg-gray-100" : ""
+                                    }`
+                                }
+                            >
+                                Admin Panel
+                            </NavLink>
+                        </>
+                    )}
                 </div>
             )}
         </div>
