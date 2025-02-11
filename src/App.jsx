@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './index.css';
 import { Base, ScrollToTop, ProtectedRoute, UserProfile, ChangePassword } from './components';
 import { Blogs, Homepage, NotFoundPage, SignIn, SignUp } from './pages';
+import { Admin } from './admin';
 
 function App() {
   return (
@@ -20,14 +21,20 @@ function App() {
             {/* protected routes */}
 
             <Route path="profile" element={
-              // <ProtectedRoute>
-              <UserProfile />
-              // </ProtectedRoute>
+              <ProtectedRoute>
+                <UserProfile />
+              </ProtectedRoute>
             }
             />
             <Route path="change_your_password" element={
+              <ProtectedRoute>
+                <ChangePassword />
+              </ProtectedRoute>
+            }
+            />
+            <Route path="admin" element={
               // <ProtectedRoute>
-              <ChangePassword />
+              <Admin />
               // </ProtectedRoute>
             }
             />

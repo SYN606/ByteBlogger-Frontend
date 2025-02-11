@@ -8,7 +8,7 @@ const ProfileMenu = () => {
     const buttonRef = useRef(null);
 
     // Retrieve `IsAdmin` value from localStorage
-    const isAdmin = JSON.parse(localStorage.getItem("IsAdmin")) || false; // Ensures boolean value
+    const isAdmin = JSON.parse(localStorage.getItem("IsAdmin")) || true; 
 
     const handleClickOutside = (e) => {
         if (
