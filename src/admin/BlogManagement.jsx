@@ -22,7 +22,7 @@ export default function BlogManagement() {
 
     return (
         <>
-            <Title>ByteBloggers - Blogs management page.</Title>
+            <Title>ByteBloggers - Blogs management page</Title>
             <div className="p-8 bg-gray-100 min-h-screen">
                 <h1 className="text-4xl font-bold mb-8 text-center text-gray-800">Blog Management</h1>
 
