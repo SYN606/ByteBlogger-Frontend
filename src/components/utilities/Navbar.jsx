@@ -16,7 +16,7 @@ function classNames(...classes) {
 
 export default function Navbar() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-    const isLoggedIn = localStorage.getItem("authToken") || false; 
+    const isLoggedIn = localStorage.getItem("authToken") || false;
 
     return (
         <nav className="bg-gray-800">

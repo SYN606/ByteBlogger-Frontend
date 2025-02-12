@@ -1,15 +1,16 @@
 import React from 'react';
-import { HeadProvider } from 'react-head';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './index.css';
 import { Base, ScrollToTop, ProtectedRoute, UserProfile, ChangePassword } from './components';
 import { Blogs, Homepage, NotFoundPage, SignIn, SignUp } from './pages';
-import { Admin } from './admin';
+import { Admin, BlogManagement, CreateBlog } from './admin';
+import { HeadProvider } from 'react-head';
 
 function App() {
   return (
-    <HeadProvider>
-      <BrowserRouter>
+
+    <BrowserRouter>
+      <HeadProvider>
         <ScrollToTop />
         <Routes>
           <Route path="/" element={<Base />}>
@@ -18,31 +19,23 @@ function App() {
             <Route path="sign_up" element={<SignUp />} />
             <Route path="blogs" element={<Blogs />} />
 
-            {/* protected routes */}
+            {/* Protected Routes */}
+            <Route element={<ProtectedRoute />}>
+              <Route path="profile" element={<UserProfile />} />
+              <Route path="change_your_password" element={<ChangePassword />} />
+            </Route>
 
-            <Route path="profile" element={
-              <ProtectedRoute>
-                <UserProfile />
-              </ProtectedRoute>
-            }
-            />
-            <Route path="change_your_password" element={
-              <ProtectedRoute>
-                <ChangePassword />
-              </ProtectedRoute>
-            }
-            />
-            <Route path="admin" element={
-              // <ProtectedRoute>
-              <Admin />
-              // </ProtectedRoute>
-            }
-            />
+            {/* testing */}
+            <Route path="admin" element={<Admin />} />
+            <Route path="admin/blog_management" element={<BlogManagement />} />
+            <Route path="admin/blog_management/create_new_blog" element={<CreateBlog />} />
+
+            {/* Error Page */}
             <Route path="*" element={<NotFoundPage />} />
           </Route>
         </Routes>
-      </BrowserRouter>
-    </HeadProvider>
+      </HeadProvider>
+    </BrowserRouter>
   );
 }
 
