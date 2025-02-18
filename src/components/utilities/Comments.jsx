@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Editor } from 'jodit-react';
 
-// Mock data for comments (this could be fetched from an API in a real application)
 const initialComments = [
     {
         id: 1,
@@ -23,9 +22,8 @@ const initialComments = [
     },
 ];
 
-const Comments = () => {
-    const [comments, setComments] = useState(initialComments); // State to hold comments
-    const [newComment, setNewComment] = useState(''); // State for the new comment
+export default function Comments() {
+    const [comments, setComments] = useState(initialComments);
     const [editorContent, setEditorContent] = useState(''); // Content of the editor
 
     const handleEditorChange = (newContent) => {
@@ -46,44 +44,45 @@ const Comments = () => {
     };
 
     return (
-        <div className="comments-section max-w-3xl mx-auto p-6">
-            <h2 className="text-3xl font-semibold mb-6">Comments</h2>
+        <>
+            <div className="comments-section max-w-3xl mx-auto p-6">
+                <h2 className="text-3xl font-semibold mb-6">Comments</h2>
 
-            {/* Displaying existing comments */}
-            <div className="comments-list mb-6">
-                {comments.map((comment) => (
-                    <div key={comment.id} className="comment mb-4 p-4 bg-gray-100 rounded-lg shadow-md">
-                        <p className="font-semibold text-lg">{comment.user}</p>
-                        <p className="text-sm text-gray-500">{comment.date}</p>
-                        <p className="mt-2 text-gray-700">{comment.content}</p>
-                    </div>
-                ))}
-            </div>
+                {/* Displaying existing comments */}
+                <div className="comments-list mb-6">
+                    {comments.map((comment) => (
+                        <div key={comment.id} className="comment mb-4 p-4 bg-gray-100 rounded-lg shadow-md">
+                            <p className="font-semibold text-lg">{comment.user}</p>
+                            <p className="text-sm text-gray-500">{comment.date}</p>
+                            <p className="mt-2 text-gray-700">{comment.content}</p>
+                        </div>
+                    ))}
+                </div>
 
-            {/* New Comment Section with Jodit Editor */}
-            <div className="new-comment p-4 bg-white shadow-lg rounded-lg">
-                <h3 className="text-xl font-semibold mb-4">Add a Comment</h3>
-                <Editor
-                    value={editorContent}
-                    onChange={handleEditorChange}
-                    config={{
-                        readonly: false, // Allow editing
-                        toolbarSticky: false, // Show toolbar on scroll
-                        buttons: ['bold', 'italic', 'underline', 'strikethrough', 'font', 'fontsize', 'paragraph', 'link'],
-                        placeholder: 'Write your comment here...',
-                        minHeight: 150,
-                    }}
-                    className="mb-4"
-                />
-                <button
-                    onClick={handleCommentSubmit}
-                    className="py-2 px-4 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-300"
-                >
-                    Submit Comment
-                </button>
+                {/* New Comment Section with Jodit Editor */}
+                <div className="new-comment p-4 bg-white shadow-lg rounded-lg">
+                    <h3 className="text-xl font-semibold mb-4">Add a Comment</h3>
+                    <Editor
+                        value={editorContent}
+                        onChange={handleEditorChange}
+                        config={{
+                            readonly: false, // Allow editing
+                            toolbarSticky: false, // Show toolbar on scroll
+                            buttons: ['bold', 'italic', 'underline'], // Only show bold, italic, and underline buttons
+                            placeholder: 'Write your comment here...',
+                            minHeight: 150,
+                        }}
+                        className="mb-4"
+                    />
+                    <button
+                        onClick={handleCommentSubmit}
+                        className="py-2 px-4 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-300"
+                    >
+                        Submit Comment
+                    </button>
+                </div>
             </div>
-        </div>
+        </>
     );
 };
 
-export default Comments;

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import data from "./data.json";
+import { Comments } from "../../components";
 
 export default function RenderBlog() {
     const { slug } = useParams();
@@ -61,7 +62,9 @@ export default function RenderBlog() {
                     <div className="prose prose-lg max-w-none" dangerouslySetInnerHTML={{ __html: blog.content }}></div>
                 </div>
             </div>
-            
+            <div className="comments-section p-6 bg-gray-100 min-h-screen">
+                <Comments />
+            </div>
         </>
     );
 }
