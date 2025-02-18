@@ -5,7 +5,7 @@ export default function HeroSection() {
         <div className="relative">
             {/* Hero Section */}
             <main className="pt-12 lg:px-8 relative">
-                <div className="mx-auto max-w-4xl text-center py-20 sm:py-32 lg:py-40">
+                <div className="mx-auto max-w-4xl text-center py-20 px-5 sm:px-0 sm:py-32 lg:py-40">
                     <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-7xl">
                         Dive Into the Future of Tech and Cybersecurity
                     </h1>

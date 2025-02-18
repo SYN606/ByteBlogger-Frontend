@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { FaBars, FaTimes, FaUser } from 'react-icons/fa';
+import { useState } from 'react';
+import { FaBars, FaTimes, FaUser, FaBlog } from 'react-icons/fa';
 import { NavLink } from 'react-router-dom';
-import { NotificationMenu, ProfileMenu } from '../'
+import { NotificationMenu, ProfileMenu, SearchBar } from '../';
 
 const navigation = [
     { name: 'Home', href: '/' },
@@ -40,21 +40,26 @@ export default function Navbar() {
                     {/* Logo and desktop nav */}
                     <div className="flex flex-1 items-center justify-between sm:items-stretch sm:justify-start">
                         <div className="flex shrink-0 items-center justify-center sm:justify-start w-full sm:w-auto">
-                            <div className="h-8 w-auto rounded-md flex items-center justify-center text-white font-bold text-sm">
-                                ByteBloggers
+                            <div className="h-8 w-auto rounded-md flex items-center justify-center text-white font-bold text-sm sm:text-xl">
+                                {/* Logo changes based on screen size */}
+                                <span className="sm:hidden text-2xl">BB</span>
+                                <span className="hidden sm:block">ByteBloggers</span>
                             </div>
                         </div>
                         <DesktopNav />
                     </div>
 
+                    {/* Search Bar */}
+                    <div className="w-full sm:w-1/3 px-4 sm:px-0 flex items-center justify-end">
+                        <SearchBar />
+                    </div>
+
                     {/* Person Icon: Logged In or Not */}
                     <div className="flex items-center">
                         {isLoggedIn ?
-
                             <>
                                 <NotificationMenu /> <ProfileMenu />
                             </>
-
                             :
                             <NavLink
                                 to='/sign_in'

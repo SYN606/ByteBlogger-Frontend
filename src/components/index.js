@@ -22,6 +22,7 @@ import ScrollToTop from './utilities/ScrollToTop'
 import ProtectedRoute from './utilities/ProtectedRoute'
 import UserProfile from './profile/UserProfile'
 import ChangePassword from './profile/ChangePassword'
+import SearchBar from './utilities/SearchBar'
 
 // hooks
 
@@ -34,5 +35,5 @@ export {
     NotificationMenu, ProfileMenu,
     HeroSection, FeaturedArticle,
     ScrollToTop, ProtectedRoute,
-    ChangePassword
+    ChangePassword, SearchBar
 }
