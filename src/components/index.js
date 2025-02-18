@@ -23,8 +23,7 @@ import ProtectedRoute from './utilities/ProtectedRoute'
 import UserProfile from './profile/UserProfile'
 import ChangePassword from './profile/ChangePassword'
 import SearchBar from './utilities/SearchBar'
-
-// hooks
+import Comments from './utilities/Comments'
 
 
 
@@ -35,5 +34,6 @@ export {
     NotificationMenu, ProfileMenu,
     HeroSection, FeaturedArticle,
     ScrollToTop, ProtectedRoute,
-    ChangePassword, SearchBar
+    ChangePassword, SearchBar,
+    Comments
 }
