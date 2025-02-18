@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './index.css';
 import { Base, ScrollToTop, ProtectedRoute, UserProfile, ChangePassword } from './components';
-import { Blogs, Homepage, NotFoundPage, RenderBlog, SignIn, SignUp } from './pages';
+import { AboutUs, Blogs, Homepage, NotFoundPage, RenderBlog, SignIn, SignUp } from './pages';
 import { Admin, BlogManagement, CreateBlog } from './admin';
 import { HeadProvider } from 'react-head';
 
@@ -16,6 +16,7 @@ function App() {
           <Route path="/" element={<Base />}>
             <Route index element={<Homepage />} />
             <Route path="sign_in" element={<SignIn />} />
+            <Route path="about_us" element={<AboutUs />} />
             <Route path="sign_up" element={<SignUp />} />
             <Route path="blogs" element={<Blogs />} />
             <Route path="blogs/:slug" element={<RenderBlog />} />

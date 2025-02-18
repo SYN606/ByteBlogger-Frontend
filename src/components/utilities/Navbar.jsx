@@ -6,7 +6,7 @@ import { NotificationMenu, ProfileMenu, SearchBar } from '../';
 const navigation = [
     { name: 'Home', href: '/' },
     { name: 'Blogs', href: '/blogs' },
-    { name: 'About us', href: '/about' },
+    { name: 'About us', href: '/about_us' },
     { name: 'Something more', href: '/something-more' },
 ];
 

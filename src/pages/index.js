@@ -4,5 +4,6 @@ import SignIn from './SignIn'
 import Blogs from './blogs/Blogs'
 import SignUp from './SignUp'
 import RenderBlog from './blogs/RenderBlogs'
+import AboutUs from './AboutUs'
 
-export { NotFoundPage, Homepage, SignIn, Blogs, SignUp, RenderBlog }
+export { NotFoundPage, Homepage, SignIn, Blogs, SignUp, RenderBlog, AboutUs }
