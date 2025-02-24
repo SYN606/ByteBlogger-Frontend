@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Title } from "react-head";
 import { InputField, PasswordField } from "../components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function SignUp() {
     const [firstName, setFirstName] = useState("");
@@ -10,15 +10,56 @@ export default function SignUp() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
 
-    const handleSubmit = (e) => {
+    const navigate = useNavigate();
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("First Name:", firstName);
-        console.log("Last Name:", lastName);
-        console.log("Username:", username);
-        console.log("Email:", email);
-        console.log("Password:", password);
-        console.log("Confirm Password:", confirmPassword);
+        setLoading(true);
+        setError("");
+
+        if (password !== confirmPassword) {
+            setError("Passwords do not match!");
+            setLoading(false);
+            return;
+        }
+
+        const userData = {
+            first_name: firstName,
+            last_name: lastName,
+            username,
+            email,
+            password,
+        };
+
+        try {
+            const response = await fetch("http://127.0.0.1:8000/api/user/register/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(userData),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                if (data.response === true) {
+                    localStorage.setItem("user_id", data.user_id);
+                    navigate("/submit_otp");
+                } else {
+                    setError("Invalid email. Please enter a correct email address.");
+                }
+            } else {
+                setError(data.message || "Registration failed. Try again.");
+            }
+        } catch (error) {
+            setError("Something went wrong. Please try again later.");
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -40,13 +81,11 @@ export default function SignUp() {
                                 value={firstName}
                                 onChange={(e) => setFirstName(e.target.value)}
                                 required
-                                className="px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                             />
                             <InputField
                                 label="Last Name (Optional)"
                                 value={lastName}
                                 onChange={(e) => setLastName(e.target.value)}
-                                className="px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                             />
                         </div>
 
@@ -55,7 +94,6 @@ export default function SignUp() {
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
                             required
-                            className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                         />
 
                         <InputField
@@ -64,7 +102,6 @@ export default function SignUp() {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             required
-                            className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                         />
                         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                             <PasswordField
@@ -72,7 +109,6 @@ export default function SignUp() {
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 required
-                                className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                             />
 
                             <PasswordField
@@ -80,14 +116,19 @@ export default function SignUp() {
                                 value={confirmPassword}
                                 onChange={(e) => setConfirmPassword(e.target.value)}
                                 required
-                                className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                             />
                         </div>
+
+                        {loading && <div className="w-full h-1 bg-indigo-600 animate-pulse"></div>}
+
+                        {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+
                         <button
                             type="submit"
-                            className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md font-semibold shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                            className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md font-semibold shadow-sm hover:bg-indigo-500"
+                            disabled={loading}
                         >
-                            Sign up
+                            {loading ? "Processing..." : "Sign up"}
                         </button>
                     </form>
 
