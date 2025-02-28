@@ -15,6 +15,31 @@ export default function SignUp() {
 
     const navigate = useNavigate();
 
+    // Function to check if username or email is already taken
+    const checkUsernameEmail = async () => {
+        try {
+            const response = await fetch("http://127.0.0.1:8000/api/user/check-user", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ username, email }),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.message || "Username or email validation failed.");
+            }
+
+            return data.available; // true if available, false if taken
+        } catch (error) {
+            setError(error.message);
+            return false;
+        }
+    };
+
+    // Function to handle form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
@@ -24,6 +49,13 @@ export default function SignUp() {
             setError("Passwords do not match!");
             setLoading(false);
             return;
+        }
+
+        // Check if username or email exists
+        const isAvailable = await checkUsernameEmail();
+        if (!isAvailable) {
+            setLoading(false);
+            return; // Stop registration if username/email is taken
         }
 
         const userData = {
@@ -45,13 +77,9 @@ export default function SignUp() {
 
             const data = await response.json();
 
-            if (response.ok) {
-                if (data.response === true) {
-                    localStorage.setItem("user_id", data.user_id);
-                    navigate("/submit_otp");
-                } else {
-                    setError("Invalid email. Please enter a correct email address.");
-                }
+            if (response.ok && data.response === true) {
+                localStorage.setItem("user_id", data.user_id);
+                navigate("/submit_otp");
             } else {
                 setError(data.message || "Registration failed. Try again.");
             }
@@ -103,6 +131,7 @@ export default function SignUp() {
                             onChange={(e) => setEmail(e.target.value)}
                             required
                         />
+
                         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                             <PasswordField
                                 label="Password"
