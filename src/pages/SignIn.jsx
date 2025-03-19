@@ -1,17 +1,22 @@
 import React, { useState } from "react";
 import { Title } from "react-head";
 import { PasswordField, InputField } from "../components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function SignIn() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setError("");
+        setLoading(true);
 
         try {
-            const response = await fetch("http://127.0.0.1:8000/api/user/login/", {
+            const response = await fetch("http://127.0.0.1:8000/api/user/login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -23,13 +28,17 @@ export default function SignIn() {
 
             if (response.ok) {
                 console.log("Login successful:", data);
-                localStorage.setItem("access_token", data.access);
-                localStorage.setItem("refresh_token", data.refresh);
+                localStorage.setItem("access_token", data.access_token);
+                localStorage.setItem("refresh_token", data.refresh_token);
+                navigate("/");
             } else {
-                console.error("Login failed:", data);
+                setError(data.error || "Invalid email or password.");
             }
         } catch (error) {
             console.error("Error:", error);
+            setError("Something went wrong. Please try again.");
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -38,51 +47,17 @@ export default function SignIn() {
             <Title>ByteBlogger - Sign In</Title>
             <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-                    <h2 className="mt-10 text-center text-2xl font-bold tracking-tight text-gray-900">
-                        Sign in to your account
-                    </h2>
+                    <h2 className="mt-10 text-center text-2xl font-bold">Sign in</h2>
                 </div>
-
                 <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
                     <form onSubmit={handleSubmit} className="space-y-6">
-                        <InputField
-                            type="email"
-                            label="Email address"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            required
-                        />
-                        <PasswordField
-                            label="Password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            required
-                        />
-                        <div>
-                            <button
-                                type="submit"
-                                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                            >
-                                Sign In
-                            </button>
-                        </div>
+                        <InputField type="email" label="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                        <PasswordField label="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                        {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+                        <button type="submit" disabled={loading} className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md">
+                            {loading ? "Signing in..." : "Sign In"}
+                        </button>
                     </form>
-
-                    <div className="mt-6 flex items-center justify-between">
-                        <Link
-                            to="/forgot_password"
-                            className="text-sm font-medium text-indigo-600 hover:text-indigo-500"
-                        >
-                            Forgot your password?
-                        </Link>
-                    </div>
-
-                    <p className="mt-10 text-center text-sm text-gray-500">
-                        Don’t have an account?{" "}
-                        <Link to="/sign_up" className="font-semibold text-indigo-600 hover:text-indigo-500">
-                            Sign Up now
-                        </Link>
-                    </p>
                 </div>
             </div>
         </>
