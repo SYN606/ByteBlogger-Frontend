@@ -3,6 +3,11 @@ import { Title } from "react-head";
 import { InputField, PasswordField } from "../components";
 import { Link, useNavigate } from "react-router-dom";
 
+const trustedEmailDomains = [
+    "gmail.com", "outlook.com", "hotmail.com", "live.com", "yahoo.com",
+    "icloud.com", "protonmail.com", "zoho.com", "aol.com", "gmx.com", "yandex.com"
+];
+
 export default function SignUp() {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
@@ -15,28 +20,9 @@ export default function SignUp() {
 
     const navigate = useNavigate();
 
-    // Function to check if username or email is already taken
-    const checkUsernameEmail = async () => {
-        try {
-            const response = await fetch("http://127.0.0.1:8000/api/user/check-user", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ username, email }),
-            });
-
-            const data = await response.json();
-
-            if (!response.ok) {
-                throw new Error(data.message || "Username or email validation failed.");
-            }
-
-            return data.available; // true if available, false if taken
-        } catch (error) {
-            setError(error.message);
-            return false;
-        }
+    const isTrustedEmail = (email) => {
+        const domain = email.split("@")[1];
+        return trustedEmailDomains.includes(domain);
     };
 
     // Function to handle form submission
@@ -51,11 +37,10 @@ export default function SignUp() {
             return;
         }
 
-        // Check if username or email exists
-        const isAvailable = await checkUsernameEmail();
-        if (!isAvailable) {
+        if (!isTrustedEmail(email)) {
+            setError("Please use a trusted email domain.");
             setLoading(false);
-            return; // Stop registration if username/email is taken
+            return;
         }
 
         const userData = {
