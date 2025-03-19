@@ -3,10 +3,9 @@ import { Title } from "react-head";
 import { InputField, PasswordField } from "../components";
 import { Link, useNavigate } from "react-router-dom";
 
-const trustedEmailDomains = [
-    "gmail.com", "outlook.com", "hotmail.com", "live.com", "yahoo.com",
-    "icloud.com", "protonmail.com", "zoho.com", "aol.com", "gmx.com", "yandex.com"
-];
+const trustedEmailDomains = ["gmail.com", "outlook.com", "yahoo.com", "company.com",
+    "hotmail.com", "live.com", "icloud.com", "protonmail.com", "zoho.com",
+    "aol.com", "gmx.com", "yandex.com"];
 
 export default function SignUp() {
     const [firstName, setFirstName] = useState("");
@@ -52,7 +51,7 @@ export default function SignUp() {
         };
 
         try {
-            const response = await fetch("http://127.0.0.1:8000/api/user/register/", {
+            const response = await fetch("http://127.0.0.1:8000/api/user/register", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -65,8 +64,10 @@ export default function SignUp() {
             if (response.ok && data.response === true) {
                 localStorage.setItem("user_id", data.user_id);
                 navigate("/submit_otp");
+            } else if (data.error) {
+                setError(data.error);
             } else {
-                setError(data.message || "Registration failed. Try again.");
+                setError("Registration failed. Try again.");
             }
         } catch (error) {
             setError("Something went wrong. Please try again later.");
